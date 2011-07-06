@@ -4,22 +4,14 @@
 
 include $(GOROOT)/src/Make.inc
 
-.PHONY: all gl install examples clean
+TARG=gl/glu
 
-all: install examples
+CGOFILES:=glu.go
 
-gl:
-	gomake -C gl
-	gomake -C glu
+ifeq ($(GOOS),darwin)
+CGO_LDFLAGS:=-framework OpenGL
+else
+CGO_LDFLAGS:=-lGLU
+endif
 
-install: gl
-	gomake -C gl install
-	gomake -C glu install
-
-examples:
-	gomake -C examples
-
-clean:
-	gomake -C gl clean
-	gomake -C glu clean
-	gomake -C examples clean
+include $(GOROOT)/src/Make.pkg
