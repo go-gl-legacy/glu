@@ -1,11 +1,8 @@
 package glu
 
-// #ifdef __APPLE__
-// # include <OpenGL/glu.h>
-// #else
-// # include <GL/glu.h>
-// #endif
+// #cgo pkg-config: glu
 //
+// #include <GL/glu.h>
 //
 import "C"
 import "gl"

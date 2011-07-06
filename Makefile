@@ -8,10 +8,4 @@ TARG=gl/glu
 
 CGOFILES:=glu.go
 
-ifeq ($(GOOS),darwin)
-CGO_LDFLAGS:=-framework OpenGL
-else
-CGO_LDFLAGS:=-lGLU
-endif
-
 include $(GOROOT)/src/Make.pkg
