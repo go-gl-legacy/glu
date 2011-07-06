@@ -1,0 +1,8 @@
+This only contains some basic glu functions.
+
+Make sure your pkg-config can provide valid compilation flags for glu.
+
+To install type:
+
+    goinstall github.com/banthar/glu
+
