@@ -6,6 +6,7 @@ package glu
 //
 import "C"
 import "github.com/banthar/gl"
+import "unsafe"
 
 func Build2DMipmaps(target gl.GLenum, internalFormat int, width, height int, format gl.GLenum, data interface{}) int {
 	t, p := gl.GetGLenumType(data)
@@ -73,4 +74,12 @@ func UnProject(winX, winY, winZ float64, model, proj [16]float64, view [4]float6
 	)
 
 	return float64(*ox), float64(*oy), float64(*oz)
+}
+
+func NewQuadric() unsafe.Pointer {
+	return unsafe.Pointer(C.gluNewQuadric())
+}
+
+func Sphere(q unsafe.Pointer, radius float32, slices, stacks int) {
+	C.gluSphere((*[0]byte)(q), C.GLdouble(radius), C.GLint(slices), C.GLint(stacks))
 }
