@@ -42,3 +42,35 @@ func LookAt(eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ float64) 
 		C.GLdouble(upZ),
 	)
 }
+
+func UnProject(winX, winY, winZ float64, model, proj [16]float64, view [4]float64) (objX, objY, objZ float64) {
+	ox := (*C.GLdouble)(&objX)
+	oy := (*C.GLdouble)(&objY)
+	oz := (*C.GLdouble)(&objX)
+
+	m := [16]C.GLdouble{C.GLdouble(model[0])}
+	p := [16]C.GLdouble{C.GLdouble(proj[0])}
+	v := [4]C.GLint{C.GLint(view[0])}
+	for i := 0; i < 16; i++ {
+		m[i] = C.GLdouble(model[i])
+		p[i] = C.GLdouble(proj[i])
+
+		if i < 4 {
+			v[i] = C.GLint(view[i])
+		}
+	}
+
+	C.gluUnProject(
+		C.GLdouble(winX),
+		C.GLdouble(winY),
+		C.GLdouble(winZ),
+		&m[0],
+		&p[0],
+		&v[0],
+		ox,
+		oy,
+		oz,
+	)
+
+	return float64(*ox), float64(*oy), float64(*oz)
+}
