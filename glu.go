@@ -73,3 +73,7 @@ func NewQuadric() unsafe.Pointer {
 func Sphere(q unsafe.Pointer, radius float32, slices, stacks int) {
 	C.gluSphere((*[0]byte)(q), C.GLdouble(radius), C.GLint(slices), C.GLint(stacks))
 }
+
+func Cylinder(q unsafe.Pointer, base, top, height float32, slices, stacks int) {
+	C.gluCylinder((*[0]byte)(q), C.GLdouble(base), C.GLdouble(top), C.GLdouble(height), C.GLint(slices), C.GLint(stacks))
+}
