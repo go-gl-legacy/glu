@@ -77,3 +77,7 @@ func Sphere(q unsafe.Pointer, radius float32, slices, stacks int) {
 func Cylinder(q unsafe.Pointer, base, top, height float32, slices, stacks int) {
 	C.gluCylinder((*[0]byte)(q), C.GLdouble(base), C.GLdouble(top), C.GLdouble(height), C.GLint(slices), C.GLint(stacks))
 }
+
+func Disk(q unsafe.Pointer, inner, outer float32, slices, loops int) {
+	C.gluDisk((*[0]byte)(q), C.GLdouble(inner), C.GLdouble(outer), C.GLint(slices), C.GLint(loops))
+}
