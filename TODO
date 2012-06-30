@@ -1,0 +1,3 @@
+in examples/tess.go, the import path currently
+points to github.com/0xfaded/glu. Restore this after
+merging.
