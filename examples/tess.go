@@ -5,7 +5,7 @@ package main
 import (
    "github.com/banthar/Go-SDL/sdl"
    "github.com/banthar/gl"
-   "github.com/0xfaded.com/glu"
+   "github.com/0xfaded/glu"
    //"github.com/banthar/glu" restore this after merge
 )
 
