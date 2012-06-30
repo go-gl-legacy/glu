@@ -84,6 +84,8 @@ func TestTesselatorData(t *testing.T) {
 	expectedEdges := 8
 
 	checkPoly(t, poly, 1, expectedTriangles * 3, 1, 0, expectedEdges, 0)
+
+	tess.Delete()
 }
 
 func TestTesselatorNil(t *testing.T) {
@@ -123,6 +125,8 @@ func TestTesselatorNil(t *testing.T) {
 
 	tess.EndContour()
 	tess.EndPolygon()
+
+	tess.Delete()
 }
 
 func TestTesselatorStar(t *testing.T) {
@@ -159,6 +163,8 @@ func TestTesselatorStar(t *testing.T) {
 	expectedCombines := 5
 
 	checkPoly(t, poly, 1, expectedTriangles * 3, 1, 0, expectedEdges, expectedCombines)
+
+	tess.Delete()
 }
 
 func tessBeginDataHandler(tessType gl.GLenum, polygonData interface{}) {
