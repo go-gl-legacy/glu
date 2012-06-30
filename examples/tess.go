@@ -105,6 +105,7 @@ func main() {
 		sdl.Delay(25)
 	}
 
+	tess.Delete()
 	sdl.Quit()
 
 }
