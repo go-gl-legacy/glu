@@ -66,6 +66,10 @@ func (tess *Tesselator) BeginPolygon(data interface{}) {
 // End the drawing of the polygon.
 func (tess *Tesselator) EndPolygon() {
 	C.gluTessEndPolygon(tess.tess)
+
+	// Free memory that we were safeguarding on the go side.
+	tess.vertData = []*vertexDataWrapper{}
+	tess.vertLocs = [][3]float64{}
 }
 
 // Begin a contour within the polygon.
