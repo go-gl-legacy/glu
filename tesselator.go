@@ -19,6 +19,10 @@ type Tesselator struct {
 	// so that the garbage collector does not invalidate them.
 	vertData []*vertexDataWrapper
 
+	// vertLocs stores a copy of the vertices' locations as specified
+	// to TessVertex. Again, so the garbage collector doesn't get them.
+	vertLocs [][3]float64
+
 	beginData      TessBeginHandler
 	vertexData     TessVertexHandler
 	endData        TessEndHandler
@@ -77,9 +81,15 @@ func (tess *Tesselator) EndContour() {
 // Add a vertex to the polygon, with the data parameter that will be
 // provided to callbacks.
 func (tess *Tesselator) Vertex(location [3]float64, data interface{}) {
+	// Wrap and safeguard data pointer.
 	_data := &vertexDataWrapper{data}
 	tess.vertData = append(tess.vertData, _data)
-	C.gluTessVertex(tess.tess, (*C.GLdouble)(&location[0]), unsafe.Pointer(_data))
+
+	// Copy location to a safe memory location.
+	tess.vertLocs = append(tess.vertLocs, location)
+	_location := unsafe.Pointer(&tess.vertLocs[len(tess.vertLocs)-1])
+
+	C.gluTessVertex(tess.tess, (*C.GLdouble)(_location), unsafe.Pointer(_data))
 }
 
 // Set the normal of the plane onto which points are projected onto before tesselation.
