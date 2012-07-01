@@ -111,7 +111,7 @@ func main() {
 }
 
 func tessBeginHandler(tessType gl.GLenum, polygonData interface{}) {
-	gl.Begin(gl.TRIANGLES)
+	gl.Begin(tessType)
 }
 
 func tessVertexHandler(vertexData interface{}, polygonData interface{}) {
