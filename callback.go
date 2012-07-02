@@ -103,7 +103,13 @@ func goTessCombineData(coords, vertexData, weight, outData, tessPtr unsafe.Point
 	var _vertexData [4]interface{}
 
 	for i, wrapper := range *wrappers {
-		_vertexData[i] = wrapper.data
+		// Work around for https://bugs.freedesktop.org/show_bug.cgi?id=51641
+		// According to documentation, all vertex pointers should be valid.
+		if wrapper == nil {
+			_vertexData[i] = _vertexData[0]
+		} else {
+			_vertexData[i] = wrapper.data
+		}
 	}
 
 	out := tess.combineData(*_coords, _vertexData, *_weight, tess.polyData)
