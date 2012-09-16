@@ -66,6 +66,28 @@ func UnProject(winX, winY, winZ float64, model, proj *[16]float64, view *[4]int3
 	return float64(ox), float64(oy), float64(oz)
 }
 
+func Project(projX, projY, projZ float64, model, proj *[16]float64, view *[4]int32) (float64, float64, float64) {
+	var ox, oy, oz C.GLdouble
+
+	m := (*C.GLdouble)(unsafe.Pointer(model))
+	p := (*C.GLdouble)(unsafe.Pointer(proj))
+	v := (*C.GLint)(unsafe.Pointer(view))
+
+	C.gluProject(
+		C.GLdouble(projX),
+		C.GLdouble(projY),
+		C.GLdouble(projZ),
+		m,
+		p,
+		v,
+		&ox,
+		&oy,
+		&oz,
+	)
+
+	return float64(ox), float64(oy), float64(oz)
+}
+
 func NewQuadric() unsafe.Pointer {
 	return unsafe.Pointer(C.gluNewQuadric())
 }
