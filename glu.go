@@ -5,8 +5,20 @@ package glu
 // #include <GL/glu.h>
 //
 import "C"
-import "github.com/banthar/gl"
-import "unsafe"
+import (
+	"errors"
+	"unsafe"
+
+	"github.com/banthar/gl"
+)
+
+func ErrorString(error gl.GLenum) (string, error) {
+	e := unsafe.Pointer(C.gluErrorString(C.GLenum(error)))
+	if e == nil {
+		return "", errors.New("Invalid GL error code")
+	}
+	return C.GoString((*C.char)(e)), nil
+}
 
 func Build2DMipmaps(target gl.GLenum, internalFormat int, width, height int, format gl.GLenum, data interface{}) int {
 	t, p := gl.GetGLenumType(data)
