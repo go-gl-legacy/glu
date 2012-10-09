@@ -7,10 +7,34 @@ package glu
 import "C"
 import (
 	"errors"
+	"reflect"
 	"unsafe"
 
 	"github.com/go-gl/gl"
 )
+
+func ptr(v interface{}) unsafe.Pointer {
+
+	if v == nil {
+		return unsafe.Pointer(nil)
+	}
+
+	rv := reflect.ValueOf(v)
+	var et reflect.Value
+	switch rv.Type().Kind() {
+	case reflect.Uintptr:
+		offset, _ := v.(uintptr)
+		return unsafe.Pointer(offset)
+	case reflect.Ptr:
+		et = rv.Elem()
+	case reflect.Slice:
+		et = rv.Index(0)
+	default:
+		panic("type must be a pointer, a slice, uintptr or nil")
+	}
+
+	return unsafe.Pointer(et.UnsafeAddr())
+}
 
 func ErrorString(error gl.GLenum) (string, error) {
 	e := unsafe.Pointer(C.gluErrorString(C.GLenum(error)))
@@ -20,16 +44,15 @@ func ErrorString(error gl.GLenum) (string, error) {
 	return C.GoString((*C.char)(e)), nil
 }
 
-func Build2DMipmaps(target gl.GLenum, internalFormat int, width, height int, format gl.GLenum, data interface{}) int {
-	t, p := gl.GetGLenumType(data)
+func Build2DMipmaps(target gl.GLenum, internalFormat int, width, height int, format, typ gl.GLenum, data interface{}) int {
 	return int(C.gluBuild2DMipmaps(
 		C.GLenum(target),
 		C.GLint(internalFormat),
 		C.GLsizei(width),
 		C.GLsizei(height),
 		C.GLenum(format),
-		C.GLenum(t),
-		p,
+		C.GLenum(typ),
+		ptr(data),
 	))
 }
 
