@@ -9,7 +9,7 @@ import (
 	"errors"
 	"unsafe"
 
-	"github.com/banthar/gl"
+	"github.com/go-gl/gl"
 )
 
 func ErrorString(error gl.GLenum) (string, error) {
