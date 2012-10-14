@@ -4,10 +4,15 @@
 
 package glu
 
-// #cgo pkg-config: glu
+// #cgo darwin LDFLAGS: -framework Carbon -framework OpenGL -framework GLUT
+// #cgo linux LDFLAGS: -lGLU
+// #cgo windows LDFLAGS: -lglu32
 //
-// #include <GL/glu.h>
-//
+// #ifdef __APPLE__
+//   #include <OpenGL/glu.h>
+// #else
+//   #include <GL/glu.h>
+// #endif
 import "C"
 import (
 	"errors"
