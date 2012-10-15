@@ -8,9 +8,9 @@ package main
 
 import (
    "github.com/banthar/Go-SDL/sdl"
-   "github.com/banthar/gl"
+   "github.com/go-gl/gl"
    "github.com/0xfaded/glu"
-   //"github.com/banthar/glu" restore this after merge
+   //"github.com/go-gl/glu" restore this after merge
 )
 
 
