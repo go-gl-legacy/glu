@@ -23,19 +23,18 @@ type Tesselator struct {
 	// to TessVertex. Again, so the garbage collector doesn't get them.
 	vertLocs [][3]float64
 
-	beginData      TessBeginHandler
-	vertexData     TessVertexHandler
-	endData        TessEndHandler
-	errorData      TessErrorHandler
-	edgeFlagData   TessEdgeFlagHandler
-	combineData    TessCombineHandler
+	beginData    TessBeginHandler
+	vertexData   TessVertexHandler
+	endData      TessEndHandler
+	errorData    TessErrorHandler
+	edgeFlagData TessEdgeFlagHandler
+	combineData  TessCombineHandler
 }
 
 // Wrapper around an interface. Does go not support (*interface{})(ptr)?
 type vertexDataWrapper struct {
 	data interface{}
 }
-
 
 // Create a new tesselator.
 func NewTess() (tess *Tesselator) {
@@ -108,4 +107,3 @@ func (tess *Tesselator) Normal(valueX, valueY, valueZ float64) {
 func (tess *Tesselator) Property(which gl.GLenum, data float64) {
 	C.gluTessProperty(tess.tess, C.GLenum(which), C.GLdouble(data))
 }
-

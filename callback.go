@@ -84,10 +84,10 @@ func goTessEdgeFlagData(flag C.GLboolean, tessPtr unsafe.Pointer) {
 
 // ===========================================================================
 
-type TessCombineHandler func(coords      [3]float64,
-                             vertexData  [4]interface{},
-                             weight      [4]float32,
-                             polygonData interface{}) (outData interface{})
+type TessCombineHandler func(coords [3]float64,
+	vertexData [4]interface{},
+	weight [4]float32,
+	polygonData interface{}) (outData interface{})
 
 //export goTessCombineData
 func goTessCombineData(coords, vertexData, weight, outData, tessPtr unsafe.Pointer) {
@@ -96,8 +96,8 @@ func goTessCombineData(coords, vertexData, weight, outData, tessPtr unsafe.Point
 		return
 	}
 
-	var _coords  *[3]float64 = (*[3]float64)(coords)
-	var _weight  *[4]float32 = (*[4]float32)(weight)
+	var _coords *[3]float64 = (*[3]float64)(coords)
+	var _weight *[4]float32 = (*[4]float32)(weight)
 
 	var wrappers *[4]*vertexDataWrapper = (*[4]*vertexDataWrapper)(vertexData)
 	var _vertexData [4]interface{}
@@ -175,5 +175,3 @@ func (tess *Tesselator) SetCombineCallback(f TessCombineHandler) {
 	tess.combineData = f
 	C.setGluTessCallback(tess.tess, C.GLenum(TESS_COMBINE_DATA))
 }
-
-

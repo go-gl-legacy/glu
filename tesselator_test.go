@@ -21,28 +21,28 @@ type PolygonData struct {
 }
 
 type VertexData struct {
-	Location [3]float64
+	Location    [3]float64
 	VertexHits  int
 	CombineHits int
 }
 
 // Test shape is a square with a square hole inside.
-var OuterContour [4][3]float64 = [4][3]float64{[3]float64{-2,  2, 0},
-                                               [3]float64{-2, -2, 0},
-                                               [3]float64{ 2, -2, 0},
-                                               [3]float64{ 2,  2, 0}}
+var OuterContour [4][3]float64 = [4][3]float64{[3]float64{-2, 2, 0},
+	[3]float64{-2, -2, 0},
+	[3]float64{2, -2, 0},
+	[3]float64{2, 2, 0}}
 
-var InnerContour [4][3]float64 = [4][3]float64{[3]float64{-1,  1, 0},
-                                               [3]float64{ 1,  1, 0},
-                                               [3]float64{ 1, -1, 0},
-                                               [3]float64{-1, -1, 0}}
+var InnerContour [4][3]float64 = [4][3]float64{[3]float64{-1, 1, 0},
+	[3]float64{1, 1, 0},
+	[3]float64{1, -1, 0},
+	[3]float64{-1, -1, 0}}
 
 // Pentagram with crossing edges. Invokes the combine callback.
-var StarContour [5][3]float64 = [5][3]float64{[3]float64{ 0,  1, 0},
-                                              [3]float64{-1, -1, 0},
-                                              [3]float64{ 1,  0, 0},
-                                              [3]float64{-1,  0, 0},
-                                              [3]float64{ 1, -1, 0}}
+var StarContour [5][3]float64 = [5][3]float64{[3]float64{0, 1, 0},
+	[3]float64{-1, -1, 0},
+	[3]float64{1, 0, 0},
+	[3]float64{-1, 0, 0},
+	[3]float64{1, -1, 0}}
 
 func TestTesselatorData(t *testing.T) {
 	poly := new(PolygonData)
@@ -56,12 +56,12 @@ func TestTesselatorData(t *testing.T) {
 
 	tess := NewTess()
 
-	tess.SetBeginCallback   (tessBeginDataHandler   )
-	tess.SetVertexCallback  (tessVertexDataHandler  )
-	tess.SetEndCallback     (tessEndDataHandler     )
-	tess.SetErrorCallback   (tessErrorDataHandler   )
+	tess.SetBeginCallback(tessBeginDataHandler)
+	tess.SetVertexCallback(tessVertexDataHandler)
+	tess.SetEndCallback(tessEndDataHandler)
+	tess.SetErrorCallback(tessErrorDataHandler)
 	tess.SetEdgeFlagCallback(tessEdgeFlagDataHandler)
-	tess.SetCombineCallback (tessCombineDataHandler )
+	tess.SetCombineCallback(tessCombineDataHandler)
 
 	tess.Normal(0, 0, 1)
 
@@ -87,7 +87,7 @@ func TestTesselatorData(t *testing.T) {
 	// the EdgeFlag must be toggled to true 8 times.
 	expectedEdges := 8
 
-	checkPoly(t, poly, 1, expectedTriangles * 3, 1, 0, expectedEdges, 0)
+	checkPoly(t, poly, 1, expectedTriangles*3, 1, 0, expectedEdges, 0)
 
 	tess.Delete()
 }
@@ -104,12 +104,12 @@ func TestTesselatorNil(t *testing.T) {
 
 	tess := NewTess()
 
-	tess.SetBeginCallback   (tessBeginNilHandler   )
-	tess.SetVertexCallback  (tessVertexNilHandler  )
-	tess.SetEndCallback     (tessEndNilHandler     )
-	tess.SetErrorCallback   (tessErrorNilHandler   )
+	tess.SetBeginCallback(tessBeginNilHandler)
+	tess.SetVertexCallback(tessVertexNilHandler)
+	tess.SetEndCallback(tessEndNilHandler)
+	tess.SetErrorCallback(tessErrorNilHandler)
 	tess.SetEdgeFlagCallback(tessEdgeFlagNilHandler)
-	tess.SetCombineCallback (tessCombineNilHandler )
+	tess.SetCombineCallback(tessCombineNilHandler)
 
 	tess.Normal(0, 0, 1)
 
@@ -142,12 +142,12 @@ func TestTesselatorStar(t *testing.T) {
 
 	tess := NewTess()
 
-	tess.SetBeginCallback   (tessBeginDataHandler   )
-	tess.SetVertexCallback  (tessVertexDataHandler  )
-	tess.SetEndCallback     (tessEndDataHandler     )
-	tess.SetErrorCallback   (tessErrorDataHandler   )
+	tess.SetBeginCallback(tessBeginDataHandler)
+	tess.SetVertexCallback(tessVertexDataHandler)
+	tess.SetEndCallback(tessEndDataHandler)
+	tess.SetErrorCallback(tessErrorDataHandler)
 	tess.SetEdgeFlagCallback(tessEdgeFlagDataHandler)
-	tess.SetCombineCallback (tessCombineDataHandler )
+	tess.SetCombineCallback(tessCombineDataHandler)
 
 	tess.Normal(0, 0, 1)
 
@@ -166,7 +166,7 @@ func TestTesselatorStar(t *testing.T) {
 	expectedEdges := 1
 	expectedCombines := 5
 
-	checkPoly(t, poly, 1, expectedTriangles * 3, 1, 0, expectedEdges, expectedCombines)
+	checkPoly(t, poly, 1, expectedTriangles*3, 1, 0, expectedEdges, expectedCombines)
 
 	tess.Delete()
 }
@@ -175,7 +175,6 @@ func tessBeginDataHandler(tessType gl.GLenum, polygonData interface{}) {
 	polygonDataPtr := polygonData.(*PolygonData)
 	polygonDataPtr.BeginCount += 1
 }
-
 
 func tessVertexDataHandler(vertexData interface{}, polygonData interface{}) {
 	polygonDataPtr := polygonData.(*PolygonData)
@@ -203,10 +202,10 @@ func tessEdgeFlagDataHandler(flag bool, polygonData interface{}) {
 	}
 }
 
-func tessCombineDataHandler(coords      [3]float64,
-                            vertexData  [4]interface{},
-                            weight      [4]float32,
-                            polygonData interface{}) (outData interface{}) {
+func tessCombineDataHandler(coords [3]float64,
+	vertexData [4]interface{},
+	weight [4]float32,
+	polygonData interface{}) (outData interface{}) {
 
 	polygonDataPtr := polygonData.(*PolygonData)
 	polygonDataPtr.CombineCount += 1
@@ -225,7 +224,6 @@ func tessCombineDataHandler(coords      [3]float64,
 func tessBeginNilHandler(tessType gl.GLenum, polygonData interface{}) {
 }
 
-
 func tessVertexNilHandler(vertexData interface{}, polygonData interface{}) {
 }
 
@@ -238,44 +236,43 @@ func tessErrorNilHandler(errno gl.GLenum, polygonData interface{}) {
 func tessEdgeFlagNilHandler(flag bool, polygonData interface{}) {
 }
 
-func tessCombineNilHandler(coords      [3]float64,
-                           vertexData  [4]interface{},
-                           weight      [4]float32,
-                           polygonData interface{}) (outData interface{}) {
+func tessCombineNilHandler(coords [3]float64,
+	vertexData [4]interface{},
+	weight [4]float32,
+	polygonData interface{}) (outData interface{}) {
 	return nil
 }
 
-
 func checkPoly(t *testing.T, poly *PolygonData, expectedBegins, expectedVertices,
-               expectedEnds, expectedErrors, expectedEdges, expectedCombines int) {
+	expectedEnds, expectedErrors, expectedEdges, expectedCombines int) {
 	if poly.BeginCount != expectedBegins {
 		t.Errorf("Expected BeginCount == %v, got %v\n",
-		         expectedBegins,
-		         poly.BeginCount)
+			expectedBegins,
+			poly.BeginCount)
 	}
 	if poly.VertexCount != expectedVertices {
 		t.Errorf("Expected VertexCount == %v, got %v\n",
-		         expectedVertices,
-		         poly.VertexCount)
+			expectedVertices,
+			poly.VertexCount)
 	}
 	if poly.EndCount != expectedEnds {
 		t.Errorf("Expected EndCount == %v, got %v\n",
-		         expectedEnds,
-		         poly.EndCount)
+			expectedEnds,
+			poly.EndCount)
 	}
 	if poly.ErrorCount != expectedErrors {
 		t.Errorf("Expected ErrorCount == %v, got %v\n",
-		         expectedErrors,
-		         poly.ErrorCount)
+			expectedErrors,
+			poly.ErrorCount)
 	}
 	if poly.EdgeFlagCount != expectedEdges {
 		t.Errorf("Expected EdgeFlagCount == %v, got %v\n",
-		         expectedEdges,
-		         poly.EdgeFlagCount)
+			expectedEdges,
+			poly.EdgeFlagCount)
 	}
 	if poly.CombineCount != expectedCombines {
 		t.Errorf("Expected CombineCount == %v, got %v\n",
-		         expectedCombines,
-		         poly.CombineCount)
+			expectedCombines,
+			poly.CombineCount)
 	}
 }
