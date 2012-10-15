@@ -1,23 +1,67 @@
+// Copyright 2012 The go-gl Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style
+// license that can be found in the LICENSE file.
+
 package glu
 
-// #cgo pkg-config: glu
+// #cgo darwin LDFLAGS: -framework Carbon -framework OpenGL -framework GLUT
+// #cgo linux LDFLAGS: -lGLU
+// #cgo windows LDFLAGS: -lglu32
 //
-// #include <GL/glu.h>
-//
+// #ifdef __APPLE__
+//   #include <OpenGL/glu.h>
+// #else
+//   #include <GL/glu.h>
+// #endif
 import "C"
-import "github.com/banthar/gl"
-import "unsafe"
+import (
+	"errors"
+	"reflect"
+	"unsafe"
 
-func Build2DMipmaps(target gl.GLenum, internalFormat int, width, height int, format gl.GLenum, data interface{}) int {
-	t, p := gl.GetGLenumType(data)
+	"github.com/go-gl/gl"
+)
+
+func ptr(v interface{}) unsafe.Pointer {
+
+	if v == nil {
+		return unsafe.Pointer(nil)
+	}
+
+	rv := reflect.ValueOf(v)
+	var et reflect.Value
+	switch rv.Type().Kind() {
+	case reflect.Uintptr:
+		offset, _ := v.(uintptr)
+		return unsafe.Pointer(offset)
+	case reflect.Ptr:
+		et = rv.Elem()
+	case reflect.Slice:
+		et = rv.Index(0)
+	default:
+		panic("type must be a pointer, a slice, uintptr or nil")
+	}
+
+	return unsafe.Pointer(et.UnsafeAddr())
+}
+
+func ErrorString(error gl.GLenum) (string, error) {
+	e := unsafe.Pointer(C.gluErrorString(C.GLenum(error)))
+	if e == nil {
+		return "", errors.New("Invalid GL error code")
+	}
+	return C.GoString((*C.char)(e)), nil
+}
+
+func Build2DMipmaps(target gl.GLenum, internalFormat int, width, height int, format, typ gl.GLenum, data interface{}) int {
 	return int(C.gluBuild2DMipmaps(
 		C.GLenum(target),
 		C.GLint(internalFormat),
 		C.GLsizei(width),
 		C.GLsizei(height),
 		C.GLenum(format),
-		C.GLenum(t),
-		p,
+		C.GLenum(typ),
+		ptr(data),
 	))
 }
 
@@ -55,6 +99,28 @@ func UnProject(winX, winY, winZ float64, model, proj *[16]float64, view *[4]int3
 		C.GLdouble(winX),
 		C.GLdouble(winY),
 		C.GLdouble(winZ),
+		m,
+		p,
+		v,
+		&ox,
+		&oy,
+		&oz,
+	)
+
+	return float64(ox), float64(oy), float64(oz)
+}
+
+func Project(projX, projY, projZ float64, model, proj *[16]float64, view *[4]int32) (float64, float64, float64) {
+	var ox, oy, oz C.GLdouble
+
+	m := (*C.GLdouble)(unsafe.Pointer(model))
+	p := (*C.GLdouble)(unsafe.Pointer(proj))
+	v := (*C.GLint)(unsafe.Pointer(view))
+
+	C.gluProject(
+		C.GLdouble(projX),
+		C.GLdouble(projY),
+		C.GLdouble(projZ),
 		m,
 		p,
 		v,
