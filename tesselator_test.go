@@ -5,7 +5,7 @@
 package glu
 
 import (
-	"github.com/banthar/gl"
+	"github.com/go-gl/gl"
 	"testing"
 )
 

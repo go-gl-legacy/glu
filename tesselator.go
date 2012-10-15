@@ -6,7 +6,7 @@ package glu
 
 //#include "GL/glu.h"
 import "C"
-import "github.com/banthar/gl"
+import "github.com/go-gl/gl"
 import "unsafe"
 
 // Opaque object used for book keeping on the go side.
