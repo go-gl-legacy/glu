@@ -7,6 +7,13 @@
 
 #include <GL/glu.h>
 
+//Apple's glu.h defines its function pointers a little differently, so this tries to fix things up:
+#ifdef __APPLE__
+#ifndef GLAPIENTRY
+typedef GLvoid (*_GLUfuncptr)(void);
+#endif
+#endif
+
 extern void goTessBeginData(GLenum type, void *polygon_data);
 extern void goTessVertexData(void *vertex_data, void *polygon_data);
 extern void goTessEndData(void *polygon_data);
