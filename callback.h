@@ -5,7 +5,11 @@
 #ifndef _CALLBACK_H_
 #define _CALLBACK_H_
 
-#include <GL/glu.h>
+#ifdef __APPLE__
+  #include <OpenGL/glu.h>
+#else
+  #include <GL/glu.h>
+#endif
 
 //Apple's glu.h defines its function pointers a little differently, so this tries to fix things up:
 #ifdef __APPLE__
