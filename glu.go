@@ -147,3 +147,7 @@ func Cylinder(q unsafe.Pointer, base, top, height float32, slices, stacks int) {
 func Disk(q unsafe.Pointer, inner, outer float32, slices, loops int) {
 	C.gluDisk((*[0]byte)(q), C.GLdouble(inner), C.GLdouble(outer), C.GLint(slices), C.GLint(loops))
 }
+
+func PartialDisk(q unsafe.Pointer, inner, outer float32, slices, loops int, startAngle, sweepAngle float32) {
+	C.gluPartialDisk((*[0]byte)(q), C.GLdouble(inner), C.GLdouble(outer), C.GLint(slices), C.GLint(loops), C.GLdouble(startAngle), C.GLdouble(sweepAngle))
+}
