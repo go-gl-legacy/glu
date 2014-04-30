@@ -137,17 +137,17 @@ func NewQuadric() unsafe.Pointer {
 }
 
 func Sphere(q unsafe.Pointer, radius float32, slices, stacks int) {
-	C.gluSphere((*[0]byte)(q), C.GLdouble(radius), C.GLint(slices), C.GLint(stacks))
+	C.gluSphere((*C.GLUquadric)(q), C.GLdouble(radius), C.GLint(slices), C.GLint(stacks))
 }
 
 func Cylinder(q unsafe.Pointer, base, top, height float32, slices, stacks int) {
-	C.gluCylinder((*[0]byte)(q), C.GLdouble(base), C.GLdouble(top), C.GLdouble(height), C.GLint(slices), C.GLint(stacks))
+	C.gluCylinder((*C.GLUquadric)(q), C.GLdouble(base), C.GLdouble(top), C.GLdouble(height), C.GLint(slices), C.GLint(stacks))
 }
 
 func Disk(q unsafe.Pointer, inner, outer float32, slices, loops int) {
-	C.gluDisk((*[0]byte)(q), C.GLdouble(inner), C.GLdouble(outer), C.GLint(slices), C.GLint(loops))
+	C.gluDisk((*C.GLUquadric)(q), C.GLdouble(inner), C.GLdouble(outer), C.GLint(slices), C.GLint(loops))
 }
 
 func PartialDisk(q unsafe.Pointer, inner, outer float32, slices, loops int, startAngle, sweepAngle float32) {
-	C.gluPartialDisk((*[0]byte)(q), C.GLdouble(inner), C.GLdouble(outer), C.GLint(slices), C.GLint(loops), C.GLdouble(startAngle), C.GLdouble(sweepAngle))
+	C.gluPartialDisk((*C.GLUquadric)(q), C.GLdouble(inner), C.GLdouble(outer), C.GLint(slices), C.GLint(loops), C.GLdouble(startAngle), C.GLdouble(sweepAngle))
 }
