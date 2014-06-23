@@ -15,7 +15,7 @@ const (
 	TESS_EDGE_FLAG_DATA           = 100110
 	TESS_COMBINE_DATA             = 100111
 
-	// TessProperty                          
+	// TessProperty
 	TESS_WINDING_RULE  = 100140
 	TESS_BOUNDARY_ONLY = 100141
 	TESS_TOLERANCE     = 100142
