@@ -57,8 +57,8 @@ func Build2DMipmaps(target gl.GLenum, internalFormat int, width, height int, for
 	return int(C.gluBuild2DMipmaps(
 		C.GLenum(target),
 		C.GLint(internalFormat),
-		C.GLsizei(width),
-		C.GLsizei(height),
+		C.GLint(width),
+		C.GLint(height),
 		C.GLenum(format),
 		C.GLenum(typ),
 		ptr(data),

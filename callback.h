@@ -17,11 +17,14 @@
 typedef GLvoid (*_GLUfuncptr)(void);
 #endif
 #endif
+#ifdef __MINGW32__
+typedef GLvoid (*_GLUfuncptr)(void);
+#endif
 
 extern void goTessBeginData(GLenum type, void *polygon_data);
 extern void goTessVertexData(void *vertex_data, void *polygon_data);
 extern void goTessEndData(void *polygon_data);
-extern void goTessErrorData(GLenum errno, void *polygon_data);
+extern void goTessErrorData(GLenum errorNumber, void *polygon_data);
 extern void goTessEdgeFlagData(GLboolean flag, void *polygon_data);
 extern void goTessCombineData(void *coords, void *vertex_data,
                               void *weight, void *outData,
