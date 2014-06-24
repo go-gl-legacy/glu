@@ -51,15 +51,15 @@ func goTessEndData(tessPtr unsafe.Pointer) {
 
 // ===========================================================================
 
-type TessErrorHandler func(errno gl.GLenum, polygonData interface{})
+type TessErrorHandler func(errorNumber gl.GLenum, polygonData interface{})
 
 //export goTessErrorData
-func goTessErrorData(errno C.GLenum, tessPtr unsafe.Pointer) {
+func goTessErrorData(errorNumber C.GLenum, tessPtr unsafe.Pointer) {
 	var tess *Tesselator = (*Tesselator)(tessPtr)
 	if tess == nil || tess.errorData == nil {
 		return
 	}
-	tess.errorData(gl.GLenum(errno), tess.polyData)
+	tess.errorData(gl.GLenum(errorNumber), tess.polyData)
 }
 
 // ===========================================================================
