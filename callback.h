@@ -18,7 +18,7 @@ typedef GLvoid (*_GLUfuncptr)(void);
 #endif
 #endif
 #ifdef __MINGW32__
-typedef GLvoid (*_GLUfuncptr)(void);
+typedef void (APIENTRY *_GLUfuncptr)();
 #endif
 
 extern void goTessBeginData(GLenum type, void *polygon_data);
