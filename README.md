@@ -5,7 +5,7 @@ This package offers minimal bindings for GLU functions.
 
 ### Usage
 
-    go get github.com/go-gl/glu
+    go get github.com/go-gl-legacy/glu
 
 
 ### License
