@@ -4,11 +4,9 @@
 
 package glu
 
-import "github.com/go-gl/gl"
-
 const (
 	// TessCallback
-	TESS_BEGIN_DATA     gl.GLenum = 100106
+	TESS_BEGIN_DATA     uint32 = 100106
 	TESS_VERTEX_DATA              = 100107
 	TESS_END_DATA                 = 100108
 	TESS_ERROR_DATA               = 100109

@@ -18,8 +18,6 @@ import (
 	"errors"
 	"reflect"
 	"unsafe"
-
-	"github.com/go-gl/gl"
 )
 
 func ptr(v interface{}) unsafe.Pointer {
@@ -45,7 +43,7 @@ func ptr(v interface{}) unsafe.Pointer {
 	return unsafe.Pointer(et.UnsafeAddr())
 }
 
-func ErrorString(error gl.GLenum) (string, error) {
+func ErrorString(error uint32) (string, error) {
 	e := unsafe.Pointer(C.gluErrorString(C.GLenum(error)))
 	if e == nil {
 		return "", errors.New("Invalid GL error code")
@@ -53,7 +51,7 @@ func ErrorString(error gl.GLenum) (string, error) {
 	return C.GoString((*C.char)(e)), nil
 }
 
-func Build2DMipmaps(target gl.GLenum, internalFormat int, width, height int, format, typ gl.GLenum, data interface{}) int {
+func Build2DMipmaps(target uint32, internalFormat int, width, height int, format, typ uint32, data interface{}) int {
 	return int(C.gluBuild2DMipmaps(
 		C.GLenum(target),
 		C.GLint(internalFormat),
