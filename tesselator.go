@@ -10,7 +10,6 @@ package glu
 //   #include <GL/glu.h>
 // #endif
 import "C"
-import "github.com/go-gl/gl"
 import "unsafe"
 
 // Opaque object used for book keeping on the go side.
@@ -108,6 +107,6 @@ func (tess *Tesselator) Normal(valueX, valueY, valueZ float64) {
 }
 
 // Set a property of the tesselator.
-func (tess *Tesselator) Property(which gl.GLenum, data float64) {
+func (tess *Tesselator) Property(which uint32, data float64) {
 	C.gluTessProperty(tess.tess, C.GLenum(which), C.GLdouble(data))
 }

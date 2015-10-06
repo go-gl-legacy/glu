@@ -5,7 +5,6 @@
 package glu
 
 import (
-	"github.com/go-gl/gl"
 	"testing"
 )
 
