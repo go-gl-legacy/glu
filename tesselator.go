@@ -10,7 +10,7 @@ package glu
 //   #include <GL/glu.h>
 // #endif
 import "C"
-import "github.com/go-gl/gl"
+import "github.com/go-gl-legacy/gl"
 import "unsafe"
 
 // Opaque object used for book keeping on the go side.

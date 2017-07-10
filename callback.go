@@ -6,7 +6,7 @@ package glu
 
 //#include "callback.h"
 import "C"
-import "github.com/go-gl/gl"
+import "github.com/go-gl-legacy/gl"
 import "unsafe"
 
 // ===========================================================================
